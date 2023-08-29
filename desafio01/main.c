@@ -8,7 +8,7 @@ void preencherMat(int vet[]) {
     scanf("%d %d", &indLinha, &indColuna);
     printf("\nDigite o numero que deseja colocar: ");
     scanf("%d", &num);
-    posicao = ((indLinha - 1) * 3) + (indColuna - 1);
+    posicao = ((indLinha - 1) * COLUNAS) + (indColuna - 1);
     vet[posicao] = num;
 }
 
@@ -34,7 +34,7 @@ void buscaEspecifica(int vet[]) {
     int posicao, indLinha, indColuna;
     printf("\nDigite as posicoes X e Y para saber qual numero ocupa: ");
     scanf("%d %d", &indLinha, &indColuna);
-    posicao = ((indLinha - 1) * 3) + (indColuna - 1);
+    posicao = ((indLinha - 1) * COLUNAS) + (indColuna - 1);
     printf("\nO numero da posicao %d e %d eh %d\n", indLinha, indColuna, vet[posicao]);
 }
 
