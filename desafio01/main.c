@@ -39,10 +39,10 @@ void buscaEspecifica(int vet[]) {
 }
 
 void main() {
-    int vetor[9], escolha = 0;
+    int vetor[LINHAS*COLUNAS], escolha = 0;
     zerarMatriz(vetor);
 
-    printf("\nDigite uma opcao:\n1-Inserir dados,\n2-Imprimir,\n3-Zerar,\n4-Busca detalhada,\n5-Sair ");
+    printf("\nDigite uma opcao:\n1-Inserir dados,\n2-Imprimir,\n3-Zerar,\n4-Busca detalhada,\n0-Sair ");
     scanf("%d", &escolha);
     while (escolha != 0) {
         if (escolha == 1) {
