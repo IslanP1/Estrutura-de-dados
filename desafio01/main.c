@@ -12,7 +12,7 @@ int dimensionar(int x, int y)
 
 int calculoPos(int indLinha, int indColuna)
 {
-    return ((indLinha - 1) * COLUNAS) + (indColuna - 1);
+    return (indLinha - 1) * COLUNAS + (indColuna - 1);
 }
 
 int buscaEspecifica(int vet[], int indLinha, int indColuna)
@@ -41,14 +41,15 @@ void zerarMatriz(int vet[])
 void imprimirMatriz(int vet[])
 {
     int k, g, a;
-    for (k = 0; k < LINHAS; k++)
+    for (k = 1; k <= LINHAS; k++)
     {
-        for(g=0; k < COLUNAS; g++){
+        for(g=1; g <= COLUNAS; g++){
             a = buscaEspecifica(vet, k, g);
             printf("%d ", a);
         }
         printf("\n");
     }
+    printf("\n");
     
 }
 
