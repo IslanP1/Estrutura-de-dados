@@ -1,90 +1,98 @@
 #include <stdio.h>
+#include <math.h>
 
-const LINHAS = 3, COLUNAS = 3;
+int LINHAS = 3, COLUNAS = 3;
 
-void preencherMat(int vet[]) {
-    int num, posicao, indLinha, indColuna;
-    printf("\nDigite as posicoes X e Y que deseja preencher na matriz: ");
-    scanf("%d %d", &indLinha, &indColuna);
-    printf("\nDigite o numero que deseja colocar: ");
-    scanf("%d", &num);
-    posicao = ((indLinha - 1) * COLUNAS) + (indColuna - 1);
-    vet[posicao] = num;
+int dimensionar(int x, int y)
+{
+    LINHAS = x;
+    COLUNAS = y;
+    return LINHAS * COLUNAS;
 }
 
-void imprimirMatriz(int vet[]) {
-    int k;
-    for (k = 0; k < LINHAS * COLUNAS; k++) {
-        printf("%d ", vet[k]);
-        if ((k + 1) % COLUNAS == 0) { 
-            printf("\n");
-        }
-    }
-    printf("\n");
+int calculoPos(int indLinha, int indColuna)
+{
+    return ((indLinha - 1) * COLUNAS) + (indColuna - 1);
 }
 
-void zerarMatriz(int vet[]) {
+int buscaEspecifica(int vet[], int indLinha, int indColuna)
+{
+    return vet[calculoPos(indLinha, indColuna)];
+}
+
+void preencherMat(int vet[], int num, int indLinha, int indColuna)
+{
+    vet[calculoPos(indLinha, indColuna)] = num;
+}
+
+
+
+void zerarMatriz(int vet[])
+{
     int k;
-    for (k = 0; k < LINHAS * COLUNAS; k++) {
+    for (k = 0; k < LINHAS * COLUNAS; k++)
+    {
         vet[k] = 0;
     }
 }
 
-void buscaEspecifica(int vet[]) {
-    int posicao, indLinha, indColuna;
-    printf("\nDigite as posicoes X e Y para saber qual numero ocupa: ");
-    scanf("%d %d", &indLinha, &indColuna);
-    posicao = ((indLinha - 1) * COLUNAS) + (indColuna - 1);
-    printf("\nO numero da posicao %d e %d eh %d\n", indLinha, indColuna, vet[posicao]);
+
+
+void imprimirMatriz(int vet[])
+{
+    int k, g, a;
+    for (k = 0; k < LINHAS; k++)
+    {
+        for(g=0; k < COLUNAS; g++){
+            a = buscaEspecifica(vet, k, g);
+            printf("%d ", a);
+        }
+        printf("\n");
+    }
+    
 }
 
-void somaMatrizes(int vet1[], int vet2[], int vet3[]){
+void somaMatrizes(int vet1[], int vet2[], int vet3[])
+{
     int k;
-    for (k = 0; k < LINHAS * COLUNAS; k++) {
+    for (k = 0; k < LINHAS * COLUNAS; k++)
+    {
         vet3[k] = vet1[k] + vet2[k];
     }
 }
 
-int decisao(int vet1[], int vet2[]){
-    printf("Qual matriz voce vai escolher (1, 2):");
-    int dec;
-    scanf("%d", &dec );
-    return (dec == 1) ? 1 : 2;
-}
+void main()
+{
+    int tam = dimensionar(3, 3);
 
+    int vetor1[tam];
+    int vetor2[tam];
+    int vetor3[tam];
 
-
-void main() {
-    int vetor[LINHAS*COLUNAS], escolha = 0;
-    int vetor2[LINHAS*COLUNAS];
-    int vetor3[LINHAS*COLUNAS];
-    zerarMatriz(vetor);
+    zerarMatriz(vetor1);
     zerarMatriz(vetor2);
     zerarMatriz(vetor3);
 
-    printf("\nDigite uma opcao:\n1-Inserir dados,\n2-Imprimir,\n3-Zerar,\n4-Busca detalhada,\n5-Soma Matrizes\n6-Imprimir Matriz C\n0-Sair ");
-    scanf("%d", &escolha);
-    while (escolha != 0) {
-        if (escolha == 1) {
-            int dec = decisao(vetor, vetor2);
-            (dec == 1)? preencherMat(vetor) : preencherMat(vetor2); 
-        } else if (escolha == 2) {
-            int dec = decisao(vetor, vetor2);
-            (dec == 1)? imprimirMatriz(vetor) : imprimirMatriz(vetor2); 
-        } else if (escolha == 3) {
-            int dec = decisao(vetor, vetor2);
-            (dec == 1)? zerarMatriz(vetor) : zerarMatriz(vetor2); 
-        } else if (escolha == 4) {
-            int dec = decisao(vetor, vetor2);
-            (dec == 1)? buscaEspecifica(vetor) : buscaEspecifica(vetor2);
-        } else if(escolha == 5){
-            somaMatrizes(vetor, vetor2, vetor3);
-        } else if(escolha == 6){
-            imprimirMatriz(vetor3);
-        }else {
-            printf("\nDigite um numero valido!\n");
-        }
-        printf("\nDigite uma opcao:\n1-Inserir dados,\n2-Imprimir,\n3-Zerar,\n4-Busca detalhada,\n5-Soma Matrizes\n6-Imprimir Matriz C\n0-Sair ");
-        scanf("%d", &escolha);
-    }
+    preencherMat(vetor1, 15, 1, 1);
+    preencherMat(vetor1, 25, 2, 2);
+    preencherMat(vetor1, 35, 3, 3);
+
+    preencherMat(vetor2, 10, 1, 1);
+    preencherMat(vetor2, 12, 2, 2);
+    preencherMat(vetor2, 45, 3, 3);
+
+    imprimirMatriz(vetor1);
+    imprimirMatriz(vetor2);
+    imprimirMatriz(vetor3);
+
+    int a = buscaEspecifica(vetor1, 1, 1);
+    printf("Valor da posição 1, 1 do vetor 1: %d\n\n", a);
+
+    somaMatrizes(vetor1, vetor2, vetor3);
+
+    printf("Após somar as matrizes:\n");
+    imprimirMatriz(vetor1);
+    imprimirMatriz(vetor2);
+    imprimirMatriz(vetor3);
+
 }
