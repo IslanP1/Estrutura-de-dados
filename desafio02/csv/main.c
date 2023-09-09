@@ -3,15 +3,9 @@
 
 // crud
 // create -> OK
-// read -> Falta resolver o bug de não aparecer o anterior
+// read -> OK
 // update -> OK
-// delete -> PENDENTE
-
-//Metas:
-//1- Otimizar o código na parte de criação do arquivo, para ficar somente uma função e passar a ação como parâmetro
-//2- Organizar as funções preencherDados e preencherNovosDados para receber seus devidos dados como parâmetro
-//3- Criar o procedimento de deletar uma linha a partir da matrícula
-//4- Terminar o read
+// delete -> OK
 
 //struct para operações de crud
 struct Colunas {
@@ -106,7 +100,7 @@ void deletarDados(FILE **arquivo, long int matriculaDeletar) {
     *arquivo = fopen("dados.csv", "r");
 
     if (*arquivo == NULL) {
-        printf("Impossível abrir o arquivo para leitura.\n");
+        printf("Impossivel abrir o arquivo para leitura.\n");
         return;
     }
 
@@ -114,7 +108,7 @@ void deletarDados(FILE **arquivo, long int matriculaDeletar) {
     FILE *tempArquivo = fopen("temp.csv", "w");
 
     if (tempArquivo == NULL) {
-        printf("Impossível criar o arquivo temporário.\n");
+        printf("Impossível criar o arquivo temporario.\n");
         fecharArquivo(*arquivo);
         return;
     }
@@ -129,8 +123,8 @@ void deletarDados(FILE **arquivo, long int matriculaDeletar) {
     }
 
     // Fecha ambos os arquivos
-    fecharArquivo(*arquivo);
-    fecharArquivo(tempArquivo);
+    //fclose(*arquivo);
+    fclose(tempArquivo);
 
     // Remove o arquivo original e renomeia o arquivo temporário para o original
     remove("dados.csv");
@@ -150,8 +144,8 @@ void main() {
 
     //lerDados(arquivo);
 
-    preencherNovosDados(&novosDados);
-    adicionarNovosDados(arquivo, 2000, &novosDados);
+    //preencherNovosDados(&novosDados);
+    //adicionarNovosDados(arquivo, 2001, &novosDados);
 
     //deletarDados(&arquivo, 2000);
     
