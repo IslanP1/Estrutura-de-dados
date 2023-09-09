@@ -34,11 +34,15 @@ void fecharArquivo(FILE *arquivo) {
 }
 
 //preenche os dados do struct
-void preencherDados(struct Colunas *dados) {  
-    dados->matricula = 2002;
-    strcpy(dados->nome, "Teste2");
-    strcpy(dados->curso, "ADS");
-    dados->idade = 18;
+void preencherDados(struct Colunas *dados) {
+    printf("Matricula: ");
+    scanf("%ld", &dados->matricula);
+    printf("Nome: ");
+    scanf("%s", dados->nome);
+    printf("Curso: ");
+    scanf("%s", dados->curso);
+    printf("Idade: ");
+    scanf("%d", &dados->idade);
 }
 
 //pega os dados preenchidos e adiciona no .csv
@@ -87,10 +91,50 @@ void adicionarNovosDados(FILE *arquivo, long int matriculaBuscada, const struct 
 }
 
 void preencherNovosDados(struct Colunas *novosDados) {
-    novosDados->matricula = 2050;
-    strcpy(novosDados->nome, "hahaha");
-    strcpy(novosDados->curso, "ADS");
-    novosDados->idade = 18;
+    printf("Matricula: ");
+    scanf("%ld", &novosDados->matricula);
+    printf("Nome: ");
+    scanf("%s", novosDados->nome);
+    printf("Curso: ");
+    scanf("%s", novosDados->curso);
+    printf("Idade: ");
+    scanf("%d", &novosDados->idade);
+}
+
+void deletarDados(FILE **arquivo, long int matriculaDeletar) {
+    // Abre o arquivo de entrada para leitura
+    *arquivo = fopen("dados.csv", "r");
+
+    if (*arquivo == NULL) {
+        printf("Impossível abrir o arquivo para leitura.\n");
+        return;
+    }
+
+    // Cria um arquivo temporário para escrever os dados excluindo o registro
+    FILE *tempArquivo = fopen("temp.csv", "w");
+
+    if (tempArquivo == NULL) {
+        printf("Impossível criar o arquivo temporário.\n");
+        fecharArquivo(*arquivo);
+        return;
+    }
+
+    struct Colunas dados;
+
+    while (fscanf(*arquivo, "%ld,%[^,],%[^,],%d\n", &dados.matricula, dados.nome, dados.curso, &dados.idade) == 4) {
+        if (matriculaDeletar != dados.matricula) {
+            // Se a matrícula não coincide, escreva os dados no arquivo temporário
+            fprintf(tempArquivo, "%ld,%s,%s,%d\n", dados.matricula, dados.nome, dados.curso, dados.idade);
+        }
+    }
+
+    // Fecha ambos os arquivos
+    fecharArquivo(*arquivo);
+    fecharArquivo(tempArquivo);
+
+    // Remove o arquivo original e renomeia o arquivo temporário para o original
+    remove("dados.csv");
+    rename("temp.csv", "dados.csv");
 }
 
 void main() {
@@ -107,8 +151,9 @@ void main() {
     //lerDados(arquivo);
 
     preencherNovosDados(&novosDados);
-
     adicionarNovosDados(arquivo, 2000, &novosDados);
 
+    //deletarDados(&arquivo, 2000);
+    
     fecharArquivo(arquivo);
 }
