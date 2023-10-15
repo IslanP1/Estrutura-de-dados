@@ -1,6 +1,7 @@
-#include "funcionario.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
+#include "./funcionario.h"
 
 void criarArquivo(FILE **arquivo) {
     *arquivo = fopen("dados.csv", "a");

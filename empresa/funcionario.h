@@ -1,7 +1,6 @@
 #ifndef FUNCIONARIO_H
 #define FUNCIONARIO_H
 
-#include <stdio.h>
 
 typedef struct funcionario {
     int cpf;
