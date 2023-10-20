@@ -24,10 +24,13 @@ void preencherDados(Funcionario *dados) {
     scanf("%s", dados->cargo);
     printf("Salario: ");
     scanf("%f", &dados->salario);
+    
 }
 
 void adicionarDados(FILE *arquivo, const Funcionario *dados) {
+    arquivo = fopen("dados.csv", "a");
     fprintf(arquivo, "%d,%s,%d,%s,%.2f\n", dados->cpf, dados->nome, dados->idade, dados->cargo, dados->salario);
+    fecharArquivo(arquivo);
 }
 
 void lerDados(FILE *arquivo) {
@@ -43,18 +46,23 @@ void atualizarDados(FILE *arquivo, Funcionario *dados) {
     int cpf;
     printf("Digite o CPF do funcionario que deseja atualizar: ");
     scanf("%d", &cpf);
-    arquivo = fopen("dados.csv", "r+");
+    arquivo = fopen("dados.csv", "r");
+    FILE *tempArquivo = fopen("temp.csv", "w");
     rewind(arquivo);
     while (fscanf(arquivo, "%d,%[^,],%d,%[^,],%f\n", &dados->cpf, dados->nome, &dados->idade, dados->cargo, &dados->salario) == 5) {
         if (cpf == dados->cpf) {
             printf("CPF: %d, Nome: %s, Idade: %d, Cargo: %s, Salario: %.2f\n", dados->cpf, dados->nome, dados->idade, dados->cargo, dados->salario);
             printf("Digite o novo salario: ");
             scanf("%f", &dados->salario);
-            fseek(arquivo, -sizeof(Funcionario), SEEK_CUR);
-            fprintf(arquivo, "%d,%s,%d,%s,%.2f\n", dados->cpf, dados->nome, dados->idade, dados->cargo, dados->salario);
-            break;
         }
-    }
+        fprintf(tempArquivo, "%d,%s,%d,%s,%.2f\n", dados->cpf, dados->nome, dados->idade, dados->cargo, dados->salario);
+    }    
+    
+    fclose(arquivo);
+    fclose(tempArquivo);
+    remove("dados.csv");
+    rename("temp.csv", "dados.csv");
+    
 }
 
 void deletarDados(FILE *arquivo, Funcionario *dados) {
