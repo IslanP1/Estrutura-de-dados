@@ -5,7 +5,7 @@
 
 void main () {
     char texto[50];
-    printf("TAD PILHA DINAMICA ------------------\n\n");
+    printf("TAD PILHA ESTATICA ------------------\n\n");
     
     printf("Insira uma expressão a ser balanceada: ");
     scanf("%99[^\n]", texto);

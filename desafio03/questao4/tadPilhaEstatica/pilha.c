@@ -4,30 +4,35 @@
 #include "./pilha.h"
 
 void inicializar(Pilha *pilha) {
-    pilha->topo = NULL;
-};
+    pilha->topo = -1; 
+}
 
 int estaVazia(Pilha *pilha) {
-    if (pilha->topo == NULL) {
+    if (pilha->topo == -1) {
         return 1;
-    } 
+    }
+    return 0;
+}
+
+int estaCheia(Pilha *pilha) {
+    if (pilha->topo == TAMANHO_MAXIMO - 1) {
+        return 1;
+    }
     return 0;
 };
 
-void empilhar(Pilha *pilha, char caractere) {
-    Nodo *N = (Nodo*)malloc(sizeof(Nodo));
-    N->item = caractere;
-    N->proximo = pilha->topo;
-    pilha->topo = N;
+
+void empilhar(Pilha *pilha, char item) {
+    if (estaCheia(pilha)){
+        printf("A pilha está cheia! \n\n");
+    } else {
+        pilha->itens[++pilha->topo] = item;
+    }
 };
 
 char remover(Pilha *pilha) {
     if (!estaVazia(pilha)){
-        Nodo *temporario = pilha->topo;
-        char removido = temporario->item;
-        pilha->topo = temporario->proximo;
-        free(temporario);
-        return removido;
+        return pilha->itens[pilha->topo--];
     }
 };
 
@@ -54,7 +59,6 @@ int estaBalanciada(char texto[]) {
             }
         }
     }
-    
 
     return estaVazia(&pilha);
 };
